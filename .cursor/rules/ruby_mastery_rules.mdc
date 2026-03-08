@@ -1,0 +1,9 @@
+# Ruby Mastery: IDE Agent Rules
+
+Applied to: `ruby_mastery/**`
+
+- **AST Consistency**: When adding new analyzers, always subclass `Parser::AST::Processor` or `RubyMastery::Rules::BaseRule`.
+- **Graph Integrity**: Do not modify `lib/ruby_mastery/architecture/graph/graph.rb` without verifying the `Architecture::Analyzers` tests pass.
+- **Spec Coverage**: Any new file in `lib/` MUST have a corresponding file in `spec/` before the PR is considered "Agent Complete."
+- **CLI Commands**: When adding a subcommand to `ArchitectureCommand` in `cli.rb`, ensure it's properly required using `require_relative` inside the method.
+- **Error Handling**: Use `Parser::Source::Buffer` and `Parser::CurrentRuby` with rescue blocks for `StandardError` to skip unparseable files.
