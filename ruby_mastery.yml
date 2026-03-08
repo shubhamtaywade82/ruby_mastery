@@ -1,0 +1,5 @@
+method_length: 10
+class_length: 200
+nesting_depth: 2
+controller_length: 50
+model_length: 300
