@@ -1,0 +1,11 @@
+*.gem
+.bundle/
+vendor/bundle/
+log/*.log
+tmp/
+coverage/
+pkg/
+doc/
+.DS_Store
+.ruby-version
+.ruby-gemset
