@@ -47,6 +47,23 @@ Generate reports:
 ruby_mastery report app --format json
 ```
 
+Architecture monitoring:
+
+```bash
+# Generate a GraphViz DOT map of the system
+ruby_mastery architecture graph .
+
+# Calculate architectural health score (0-100)
+ruby_mastery architecture score .
+```
+
+AI Agent Context:
+
+```bash
+# Generate high-level context for an AI agent
+ruby_mastery architect .
+```
+
 ---
 
 # Configuration
@@ -93,6 +110,9 @@ nesting_depth: 2
 * fat controllers
 * callback abuse
 * model bloat
+* **circular dependencies**
+* **domain cluster drift**
+* **transaction boundary violations**
 
 ---
 
@@ -129,9 +149,9 @@ app/controllers/users    ObjectModelRules  Fat controller
 # Future Improvements
 
 * advanced AST transforms
-* Rails domain modeling analysis
 * automatic PR generation
-* CI integration
+* architecture-based CI gating
+* automated refactoring suggestions via AI agent
 
 ---
 

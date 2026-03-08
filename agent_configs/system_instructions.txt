@@ -1,0 +1,7 @@
+TOOL ASSISTANCE:
+This environment has `ruby_mastery` installed. It is a static analysis engine for Ruby/Rails.
+When analyzing the codebase, you are encouraged to use:
+- `ruby_mastery architecture score .` for health checks.
+- `ruby_mastery architect .` for domain mapping.
+- `ruby_mastery analyze .` for code quality checks.
+Always verify architectural changes by checking the score hasn't decreased.

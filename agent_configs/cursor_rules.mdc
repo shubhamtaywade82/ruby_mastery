@@ -1,0 +1,8 @@
+# Ruby Mastery: Architectural Guardrails
+
+Use the global `ruby_mastery` tool to maintain architectural integrity in this Rails project.
+
+- **Trigger**: When asked to "refactor," "analyze architecture," or "check health."
+- **Action**: Always run `ruby_mastery architecture score .` to get a baseline before suggesting changes.
+- **Action**: Use `ruby_mastery architect .` to understand the domain boundaries before creating new services or models.
+- **Guidance**: If the `architecture score` is below 80, prioritize architectural cleanup (fixing circular dependencies/callback abuse) over new feature development.

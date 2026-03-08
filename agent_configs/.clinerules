@@ -1,0 +1,12 @@
+You have a high-level architectural tool installed globally: `ruby_mastery`.
+Your mandate is to ensure this codebase follows Rails Best Practices and DDD principles.
+
+COMMANDS:
+- `ruby_mastery architecture score .` : Use this to quantify technical debt.
+- `ruby_mastery architect .` : Use this to see a structural map of the app.
+- `ruby_mastery analyze .` : Use this to find code-level "smells" (Fat Controllers, etc.)
+
+WORKFLOW:
+1. Upon entering a project, run `ruby_mastery architect .` to orient yourself.
+2. Before any refactor, run `ruby_mastery architecture score .`.
+3. Do not introduce circular dependencies; `ruby_mastery` will detect them.
