@@ -1,54 +1,140 @@
-# RubyMastery
+# Ruby Mastery
 
-`RubyMastery` is a production-grade static analysis and refactoring engine designed to help developers write idiomatic, clean, and maintainable Ruby code. It is based on the principles from authoritative Ruby literature.
+Ruby Mastery is a static analysis and refactoring engine for Ruby codebases.
 
-## Core Features
+It enforces:
 
-- **AST Analysis**: Deep code inspection using the `parser` and `rubocop-ast` gems.
-- **Clean Ruby Enforcement**: Detects procedural loops (`for`), long methods, and deep nesting.
-- **Ruby Object Model Rules**: Identifies procedural classes and encourages proper mixin usage.
-- **Refactoring Engine**: Automatic transformation of AST to improve code quality (e.g., replacing `for` with `.each`).
-- **Flexible Reporting**: Output violations in CLI tables, JSON, or Markdown formats.
+• Ruby idioms  
+• Ruby object model correctness  
+• Rails architecture best practices  
+• Clean code principles
 
-## Installation
+Inspired by:
+
+- Programming Ruby
+- The Well-Grounded Rubyist
+- Clean Ruby
+- Clean Code Principles
+- The RSpec Book
+
+---
+
+# Installation
 
 ```bash
 bundle install
 ```
 
-## Usage
+---
 
-### Analyze a path
+# CLI Usage
+
+Analyze a project:
+
 ```bash
-bin/ruby_mastery analyze app/
+ruby_mastery analyze .
 ```
 
-### Generate a JSON report
+Apply refactors:
+
 ```bash
-bin/ruby_mastery report app/ --format=json
+ruby_mastery refactor app/
 ```
 
-### Apply refactors (Experimental)
+Generate reports:
+
 ```bash
-bin/ruby_mastery refactor app/models/order.rb
+ruby_mastery report app --format json
 ```
 
-## Configuration
+---
 
-Create a `ruby_mastery.yml` in your project root:
+# Configuration
 
-```yaml
+Edit:
+
+```
+ruby_mastery.yml
+```
+
+Example:
+
+```
 method_length: 10
 class_length: 200
 nesting_depth: 2
-controller_length: 50
-model_length: 300
 ```
 
-## Development
+---
 
-Run tests with RSpec:
+# Supported Analysis
 
-```bash
+### Code Quality
+
+* Long methods
+* Deep nesting
+* Large classes
+* Temporary variables
+
+### Ruby Idioms
+
+* `for` loops
+* manual accumulation
+* procedural iteration
+
+### Ruby Object Model
+
+* procedural classes
+* misuse of class methods
+* inheritance abuse
+
+### Rails Architecture
+
+* fat controllers
+* callback abuse
+* model bloat
+
+---
+
+# Refactors
+
+The engine can automatically perform:
+
+* replace loops with enumerables
+* guard clause introduction
+* split large methods
+* suggest object extraction
+* detect boolean flags
+
+---
+
+# Running Tests
+
+```
 bundle exec rspec
 ```
+
+---
+
+# Example Output
+
+```
+File                     Rule              Message
+app/models/order.rb      MethodRules       Method too long
+app/controllers/users    ObjectModelRules  Fat controller
+```
+
+---
+
+# Future Improvements
+
+* advanced AST transforms
+* Rails domain modeling analysis
+* automatic PR generation
+* CI integration
+
+---
+
+# License
+
+MIT

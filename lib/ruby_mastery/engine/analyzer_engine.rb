@@ -6,6 +6,9 @@ require_relative "../analyzers/ast_analyzer"
 require_relative "../analyzers/ruby_idiom_analyzer"
 require_relative "../analyzers/architecture_analyzer"
 require_relative "../analyzers/rails_analyzer"
+require_relative "../analyzers/rails_domain_analyzer"
+require_relative "../analyzers/service_object_analyzer"
+require_relative "../analyzers/rails_controller_query_analyzer"
 
 module RubyMastery
   module Engine
@@ -54,7 +57,10 @@ module RubyMastery
           RubyMastery::Analyzers::AstAnalyzer,
           RubyMastery::Analyzers::RubyIdiomAnalyzer,
           RubyMastery::Analyzers::ArchitectureAnalyzer,
-          RubyMastery::Analyzers::RailsAnalyzer
+          RubyMastery::Analyzers::RailsAnalyzer,
+          RubyMastery::Analyzers::RailsDomainAnalyzer,
+          RubyMastery::Analyzers::ServiceObjectAnalyzer,
+          RubyMastery::Analyzers::ControllerQueryAnalyzer
         ]
       end
     end
