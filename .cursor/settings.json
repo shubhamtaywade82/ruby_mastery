@@ -1,0 +1,19 @@
+{
+  "ruby.lint.rubocop.enabled": true,
+  "ruby.format": "rubocop",
+  "ai.model": "gpt-4o",
+  "ai.temperature": 0.2,
+  "ai.enforceProjectContext": true,
+  "ai.contextFiles": [
+    "AGENT.md",
+    "SKILLS/"
+  ],
+  "ai.customTools": [
+    {
+      "name": "ruby_runtime_query",
+      "description": "Inspects Ruby runtime classes and methods to prevent hallucination.",
+      "command": "bin/ruby_runtime_query",
+      "args": ["--class", "{{class}}", "--method", "{{method}}"]
+    }
+  ]
+}

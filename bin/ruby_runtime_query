@@ -1,0 +1,96 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require "json"
+require "optparse"
+
+# The Ruby Mastery Runtime Introspection Tool
+# Use this to verify class/method existence before generating code.
+class RuntimeQuery
+  def self.call(options)
+    new(options).call
+  end
+
+  def initialize(options)
+    @class_name = options[:class]
+    @method_name = options[:method]
+    @search = options[:search]
+    @load_paths = options[:load_paths] || ["lib"]
+  end
+
+  def call
+    # Set up load paths
+    @load_paths.each { |path| $LOAD_PATH.unshift(File.expand_path(path)) }
+
+    # Try to load the main library if it exists
+    begin
+      require "ruby_mastery" if File.exist?("lib/ruby_mastery.rb")
+    rescue LoadError
+      # Silently fail if library can't be loaded
+    end
+
+    if @search
+      search_runtime(@search)
+    elsif @class_name && @method_name
+      method_info(@class_name, @method_name)
+    elsif @class_name
+      class_info(@class_name)
+    else
+      { error: "Provide --class, --method, or --search" }
+    end
+  end
+
+  private
+
+  def search_runtime(pattern)
+    regex = Regexp.new(pattern, Regexp::IGNORECASE)
+    classes = ObjectSpace.each_object(Class).select { |c| c.name =~ regex }.map(&:name)
+    { matches: classes }
+  rescue RegexpError
+    { error: "Invalid search pattern" }
+  end
+
+  def class_info(name)
+    klass = Object.const_get(name)
+    {
+      name: klass.name,
+      instance_methods: klass.public_instance_methods(false),
+      class_methods: klass.methods(false),
+      ancestors: klass.ancestors.map(&:name).compact.first(10)
+    }
+  rescue NameError
+    { error: "Class '#{name}' not found" }
+  end
+
+  def method_info(class_name, method_name)
+    klass = Object.const_get(class_name)
+    method_obj = if klass.public_instance_methods(false).include?(method_name.to_sym)
+                   klass.instance_method(method_name)
+                 elsif klass.methods(false).include?(method_name.to_sym)
+                   klass.method(method_name)
+                 end
+
+    return { error: "Method '#{method_name}' not found on '#{class_name}'" } unless method_obj
+
+    {
+      class: class_name,
+      method: method_name,
+      parameters: method_obj.parameters,
+      arity: method_obj.arity,
+      source_location: method_obj.source_location
+    }
+  rescue NameError
+    { error: "Class '#{class_name}' not found" }
+  end
+end
+
+options = {}
+OptionParser.new do |opts|
+  opts.banner = "Usage: bin/ruby_runtime_query [options]"
+  opts.on("-c", "--class NAME", "Inspect class info") { |v| options[:class] = v }
+  opts.on("-m", "--method NAME", "Inspect method info (requires --class)") { |v| options[:method] = v }
+  opts.on("-s", "--search PATTERN", "Search for classes") { |v| options[:search] = v }
+  opts.on("-I", "--include PATH", "Add load path") { |v| (options[:load_paths] ||= []) << v }
+end.parse!
+
+puts JSON.pretty_generate(RuntimeQuery.call(options))
